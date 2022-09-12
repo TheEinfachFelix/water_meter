@@ -1,9 +1,21 @@
+int changevalue = 2;
+int current = 0;
+char input1 = '1';
+uint32_t lasthit;
+
 void setup() {
-  // put your setup code here, to run once:
+  lasthit =  millis();
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  if (analogRead(input1) < changevalue && !analogRead(input1) >= current){
+    Serial.println(lasthit - millis());
+    lasthit = millis();
+    current = analogRead(input1);
+  }
+  else{
+    current = analogRead(input1);
+  }
+   
 }
