@@ -10,7 +10,7 @@ void setup() {
 
 void loop() {
   if (analogRead(17) < changevalue && current == true){
-    Serial.println((millis() - lasthit)*100);
+    Serial.println(1000/(millis() - lasthit));
     lasthit = millis();
     current = false;
   }
