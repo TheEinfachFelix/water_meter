@@ -8,6 +8,8 @@
 -  
 
 ## Code 
+-  sd card
+-  nb iot?
 -  Serial interface to print data
 -  data logging to eprom
 -  power smater data logging
