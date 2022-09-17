@@ -5,6 +5,7 @@ This Project was made for an school projekt to survey rivers. This projekt is on
 ## Parts
 ### general
 -  wmos d1 mini
+-  DS3231
 -  powerbank
 -  watertight encloser
 ### water Flow  sensor
@@ -22,4 +23,6 @@ This Project was made for an school projekt to survey rivers. This projekt is on
 -  3D printed parts
 
 ## Usage
+### Libs
+-  RTC DS3231: https://github.com/adafruit/RTClib
 ### Pin out
