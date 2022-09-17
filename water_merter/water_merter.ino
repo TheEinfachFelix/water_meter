@@ -9,7 +9,11 @@ void setup() {
 }
 
 void loop() {
-  if (analogRead(17) < changevalue && current == true){
+  w_speed();
+}
+
+void w_speed(){
+if (analogRead(17) < changevalue && current == true){
     Serial.println(1000/(millis() - lasthit));
     lasthit = millis();
     current = false;
@@ -17,4 +21,5 @@ void loop() {
   if (analogRead(17) > changevalue){
     current = true;
   }
+  
 }
