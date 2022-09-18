@@ -1,5 +1,6 @@
 #include <Wire.h>
 #include "RTClib.h"
+#include <EEPROM.h>
  
 RTC_DS3231 rtc;
 
@@ -12,7 +13,6 @@ void setup() {
   #ifndef ESP8266 //for RTC
   while (!Serial); // for Leonardo/Micro/Zero
 #endif
-
   if (! rtc.begin()) {
     Serial.println("Couldn't find RTC");
     while (1);
@@ -22,14 +22,24 @@ void setup() {
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   } // end of RTC 
 
+  
+  
+
   lasthit =  millis();
   Serial.begin(9600);
+  EEPROM.begin(4096);
+  
+  
+  
+  //EEPROM.write(100,14);
 }
 
 void loop() {
   DateTime now = rtc.now();
-  Serial.println(now.unixtime()-1663400000L);
-  //w_speed();
+  //Serial.println(now.unixtime()-1663400000L);
+  //Serial.println(EEPROM.read(100));
+  w_speed();
+  //delay(5000);
 }
 
 void w_speed(){

@@ -23,7 +23,8 @@
 Interupts: The pins D5, D6, D7 work without restrictions; D3 and D4 work, but can not be low on boot, otherwise the WEMOS freezes
 
 eepron: 4 mb size 100.000 writes 
-        #include <EEPROM.h> //Einbinden der EEPROM Bibliothekbyte Wert = EEPROM.read(0);
+        #include <EEPROM.h> //Einbinden der EEPROM Bibliothekbyte 
+        Wert = EEPROM.read(0);
         byte wert = 255;            // übergabe dees Wertes 255 an die neue Vriable wert
         int adresse = 0;            // Festelegen der Adresse
         EEPROM.write(adresse,wert)  // Schreiben der Variable wert in die Adresse adresse
