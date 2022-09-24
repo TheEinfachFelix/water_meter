@@ -1,13 +1,15 @@
 #include <Wire.h>
 #include "RTClib.h"
 #include <EEPROM.h>
+#include <IoAbstractionWire.h>
  
 RTC_DS3231 rtc;
 
 int changevalue = 600;
 bool current = false;
-char input1 = '17';
+char input1 = '12';
 uint32_t lasthit;
+int test = 0;
 
 void setup() {
   #ifndef ESP8266 //for RTC
@@ -30,15 +32,21 @@ void setup() {
   EEPROM.begin(4096);
   
   
-  
-  //EEPROM.write(100,14);
+  //EEPROM.write(100,12);
+
+
+  pinMode(17, INPUT); 
+  //attachInterrupt(digitalPinToInterrupt(12),teste,FALLING);
 }
 
 void loop() {
   DateTime now = rtc.now();
+
+  Serial.println(analogRead(12));
+
   //Serial.println(now.unixtime()-1663400000L);
   //Serial.println(EEPROM.read(100));
-  w_speed();
+  //w_speed();
   //delay(5000);
 }
 
@@ -52,4 +60,7 @@ if (analogRead(17) < changevalue && current == true){
     current = true;
   }
   
+}
+void teste(){
+  test++;
 }
