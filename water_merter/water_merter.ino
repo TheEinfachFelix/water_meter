@@ -42,9 +42,9 @@ void setup() {
 void loop() {
   DateTime now = rtc.now();
 
-  Serial.println(analogRead(12));
+  //Serial.println(analogRead(12));
 
-  //Serial.println(now.unixtime()-1663400000L);
+  Serial.println(now.unixtime()-1663400000L);
   //Serial.println(EEPROM.read(100));
   //w_speed();
   //delay(5000);
