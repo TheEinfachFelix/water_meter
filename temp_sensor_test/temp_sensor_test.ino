@@ -1,22 +1,26 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-const int oneWireBus = 2;   //GPIO Pin 1-Wire Bus
-OneWire oneWire(oneWireBus);
-DallasTemperature sensors(&oneWire);
+const int LSensor = 2;
+const int WSensor = 0;
+OneWire LoneWire(LSensor);
+OneWire WoneWire(WSensor);
+DallasTemperature Lsensors(&LoneWire);
+DallasTemperature Wsensors(&WoneWire);
 
 void setup() {
   Serial.begin(115200);
-  sensors.begin();
+  Lsensors.begin();
+  Wsensors.begin();
 }
 
 void loop() {
-  sensors.requestTemperatures(); 
-  float temperatureC = sensors.getTempCByIndex(0);
-  float temperatureF = sensors.getTempFByIndex(0);     
-  Serial.print(temperatureC);
-  Serial.println("ºC");
-  Serial.print(temperatureF);
-  Serial.println("ºF");
-  delay(5000);
+  Lsensors.requestTemperatures(); 
+  Wsensors.requestTemperatures(); 
+  float LtemperatureC = Lsensors.getTempCByIndex(0);    
+  float WtemperatureC = Wsensors.getTempCByIndex(0); 
+  Serial.println(LtemperatureC);
+  Serial.print(" ºC ");
+  Serial.println(WtemperatureC);
+  delay(1000);
 }
