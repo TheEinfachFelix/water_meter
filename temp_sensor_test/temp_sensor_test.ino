@@ -19,8 +19,9 @@ void loop() {
   Wsensors.requestTemperatures(); 
   float LtemperatureC = Lsensors.getTempCByIndex(0);    
   float WtemperatureC = Wsensors.getTempCByIndex(0); 
+  Serial.print("Lt: ")
   Serial.println(LtemperatureC);
-  Serial.print(" ºC ");
+  Serial.print("Wt: ");
   Serial.println(WtemperatureC);
   delay(1000);
 }

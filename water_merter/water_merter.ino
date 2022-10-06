@@ -2,14 +2,25 @@
 #include "RTClib.h"
 #include <EEPROM.h>
 #include <IoAbstractionWire.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
  
 RTC_DS3231 rtc;
 
+const int input1 = 12;
+const int LSensor = 2;
+const int WSensor = 0;
+
 int changevalue = 600;
 bool current = false;
-char input1 = '12';
 uint32_t lasthit;
 int test = 0;
+
+//temperatur sensor stuff
+OneWire LoneWire(LSensor);
+OneWire WoneWire(WSensor);
+DallasTemperature Lsensors(&LoneWire);
+DallasTemperature Wsensors(&WoneWire);
 
 void setup() {
   #ifndef ESP8266 //for RTC
@@ -30,6 +41,8 @@ void setup() {
   lasthit =  millis();
   Serial.begin(9600);
   EEPROM.begin(4096);
+  Lsensors.begin();
+  Wsensors.begin();
   
   
   //EEPROM.write(100,12);
@@ -63,4 +76,16 @@ if (analogRead(17) < changevalue && current == true){
 }
 void teste(){
   test++;
+}
+
+int Ltemp(){
+  Lsensors.requestTemperatures();
+  float LtemperatureC = Lsensors.getTempCByIndex(0);
+  return(LtemperatureC)
+}
+
+int Wtemp(){
+  Wsensors.requestTemperatures();
+  float WtemperatureC = Wsensors.getTempCByIndex(0);
+  return(WtemperatureC)
 }
