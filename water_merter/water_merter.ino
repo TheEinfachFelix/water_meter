@@ -55,9 +55,9 @@ void setup() {
 void loop() {
   DateTime now = rtc.now();
 
-  //Serial.println(analogRead(12));
+  Serial.println(Ltemp());
 
-  Serial.println(now.unixtime()-1663400000L);
+  Serial.println(now.unixtime()-1665000000L);
   //Serial.println(EEPROM.read(100));
   //w_speed();
   //delay(5000);
@@ -72,20 +72,20 @@ if (analogRead(17) < changevalue && current == true){
   if (analogRead(17) > changevalue){
     current = true;
   }
-  
 }
+
 void teste(){
   test++;
 }
 
-int Ltemp(){
+float Ltemp(){
   Lsensors.requestTemperatures();
   float LtemperatureC = Lsensors.getTempCByIndex(0);
-  return(LtemperatureC)
+  return(LtemperatureC);
 }
 
-int Wtemp(){
+float Wtemp(){
   Wsensors.requestTemperatures();
   float WtemperatureC = Wsensors.getTempCByIndex(0);
-  return(WtemperatureC)
+  return(WtemperatureC);
 }
