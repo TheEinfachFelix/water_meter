@@ -33,6 +33,6 @@ This Project was made for an school projekt to survey rivers. This projekt is on
 ### Pin out
 
 pin | part
--------- | --------
+:--------: | :--------
 0 | Water temp sensor
 2 | Air temp sensor
