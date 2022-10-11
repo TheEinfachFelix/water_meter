@@ -10,8 +10,9 @@
 ## Code 
 -  sd card
 -  nb iot?
--  Serial interface to print data
--  data logging to eprom
+-  [x] Serial interface to print data
+-  smart Serial read
+-  [x] data logging to eprom
 -  power smater data logging
 -  low power / deepsleep
 -  using interupts to messure speed of water and so on
