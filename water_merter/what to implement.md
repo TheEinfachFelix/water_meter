@@ -2,8 +2,8 @@
 -  flow meter
 -  water level
 -  conductivity
--  light level
--  temp (water + Air)
+-  [x] light level
+-  [x] temp (water + Air)
 -  water clearaty
 -  
 
@@ -28,7 +28,7 @@ eepron: 4 mb size 100.000 writes
         byte wert = 255;            // übergabe dees Wertes 255 an die neue Vriable wert
         int adresse = 0;            // Festelegen der Adresse
         EEPROM.write(adresse,wert)  // Schreiben der Variable wert in die Adresse adresse
-        
+
 power: normal 70mA sleep 0,15ma
 
 
