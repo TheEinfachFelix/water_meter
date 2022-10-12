@@ -66,7 +66,7 @@ void loop() {
   eepromWrite();
   SerialResponse();
   EEPROM.commit();
-  delay(1000000);
+  delay(10000);
 }
 
 //--------------------------------------------Sensor------------------------------------------------
@@ -152,7 +152,8 @@ void eepromWrite(){
 void SerialResponse(){
   String input;
   Serial.println("Serial waiting: ");
-  while (Serial.available() == 0 && input == NULL) {
+  Serial.println(Serial && input == NULL);
+  while (Serial && input == NULL) {
     input = Serial.readString();
   }
   if (input == "print"){
