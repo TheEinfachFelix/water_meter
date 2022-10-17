@@ -11,7 +11,7 @@
 -  sd card
 -  nb iot?
 -  [x] Serial interface to print data
--  smart Serial read
+-  [x] smart Serial read
 -  [x] data logging to eprom
 -  power smater data logging
 -  low power / deepsleep

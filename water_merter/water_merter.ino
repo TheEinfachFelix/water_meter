@@ -1,17 +1,27 @@
 #include <Wire.h>
 #include "RTClib.h"
 #include <EEPROM.h>
-#include <IoAbstractionWire.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <Adafruit_ADS1X15.h>
  
 RTC_DS3231 rtc;
+Adafruit_ADS1115 ads;
 
+// pin out
 const int input1 = 12;
 const int LSensor = 2;
 const int WSensor = 0;
-const int wSpeed = 17;
+const int wSpeed = 17; //obsoleet?
+const int readLED = 15;
+const int testLED = 13;
+const int enable = 12;
 
+//adc pin out
+const int PhotoR1 = 0;
+const int PhotoR2 = 1;
+const int HallSenFlow = 2;
+const int HallSenDepth = 3;
 
 //wSpeed vars
 int changevalue = 600;
@@ -33,7 +43,12 @@ DallasTemperature Lsensors(&LoneWire);
 DallasTemperature Wsensors(&WoneWire);
 
 //--------------------------------------------Setup------------------------------------------------
-void setup() {
+void setup() {  
+  Serial.begin(115200);
+  EEPROM.begin(4096);
+  delay(600);
+  Serial.println("wake up");
+  
   #ifndef ESP8266 //for RTC
   while (!Serial); // for Leonardo/Micro/Zero
 #endif
@@ -47,15 +62,32 @@ void setup() {
   } // end of RTC 
   
   lasthit =  millis();
-  Serial.begin(115200);
-  EEPROM.begin(4096);
+
+  //temp sensor
   Lsensors.begin();
   Wsensors.begin();
-  
+  //adc stuff
+  ads.setGain(GAIN_TWOTHIRDS);
+  ads.begin();
+
   pinMode(wSpeed, INPUT); 
+  pinMode(enable, INPUT_PULLUP); 
+  pinMode(readLED, OUTPUT); 
+  pinMode(testLED, OUTPUT); 
   
   //eepromClear();
   Serial.println("OK lets Go!");
+    
+////////////////////////////////////////////////////
+  digitalWrite(readLED, 1);
+  eepromWrite();
+  SerialResponse();
+  EEPROM.commit();
+  
+  digitalWrite(testLED, digitalRead(enable));
+  if(digitalRead(enable)){
+    sleep();
+  }
 }
 
 ////--------------------------------------------loop------------------------------------------------
@@ -63,10 +95,14 @@ void loop() {
   if (live == 1){
     eepromPrint();
   }
-  eepromWrite();
+
+  digitalWrite(testLED, digitalRead(enable));
+
   SerialResponse();
-  EEPROM.commit();
-  delay(10000);
+  delay(500);
+  if(digitalRead(enable)){
+    sleep();
+  }
 }
 
 //--------------------------------------------Sensor------------------------------------------------
@@ -93,6 +129,10 @@ uint16_t Wtemp(){
   float WtemperatureC = Wsensors.getTempCByIndex(0);
   WtemperatureC = WtemperatureC*100;
   return(WtemperatureC);
+}
+
+uint16_t adsRead(int p){
+  return(2*ads.readADC_SingleEnded(p));
 }
 
 uint32_t rtcTime(){
@@ -132,10 +172,11 @@ void eepromClear(){
     EEPROM.put(i,0);
   }
   EEPROM.commit();
+  eepromAdres = 2;
 }
 
 void eepromWrite(){
-    EEPROM.get(0,eepromAdres);
+  EEPROM.get(0,eepromAdres);
   //time
   EEPROM.put(eepromAdres,rtcTime());
   eepromAdres += packageSize[0];
@@ -151,12 +192,9 @@ void eepromWrite(){
 //--------------------------------------------Serial------------------------------------------------
 void SerialResponse(){
   String input;
-  Serial.println("Serial waiting: ");
-  Serial.println(Serial && input == NULL);
-  while (Serial && input == NULL) {
-    input = Serial.readString();
-  }
-  if (input == "print"){
+  input = Serial.readString();
+  if (input == NULL){}
+  else if (input == "print"){
     eepromPrint();
   }
   else if (input == "clear"){
@@ -173,4 +211,12 @@ void SerialResponse(){
   else{
     Serial.println("syntax error");
   }
+  Serial.flush();
+}
+
+//--------------------------------------------Sleep------------------------------------------------
+void sleep(){
+  Serial.println("deep sleep");
+  digitalWrite(readLED, 0);
+  ESP.deepSleep(1*60*1000000);
 }

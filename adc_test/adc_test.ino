@@ -1,7 +1,6 @@
 #include <Wire.h>
 #include <Adafruit_ADS1X15.h>
 Adafruit_ADS1115 ads;
-int16_t adc0;
 
 void setup() {
 Serial.begin(9600); //gain
