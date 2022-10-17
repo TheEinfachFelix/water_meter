@@ -17,7 +17,7 @@
 -  low power / deepsleep
 -  using interupts to messure speed of water and so on
 -  [X] rtc module
-
+-  deep sleep
 
 
 ## Notes
@@ -33,3 +33,6 @@ eepron: 4 mb size 100.000 writes
 power: normal 70mA sleep 0,15ma
 
 
+## pcb
+gnd and vcc pin header
+deep sleep stuff
