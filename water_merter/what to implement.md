@@ -11,14 +11,14 @@
 -  sd card
 -  nb iot?
 -  [x] Serial interface to print data
--  smart Serial read
+-  [x] smart Serial read
 -  [x] data logging to eprom
--  power smater data logging
--  low power / deepsleep
--  using interupts to messure speed of water and so on
+-  [x] power smater data logging
+-  [X] low power / deepsleep
+-  [X] using interupts to messure speed of water and so on
 -  [X] rtc module
--  deep sleep
-
+-  [x] deep sleep
+-  add all readings to eeprom
 
 ## Notes
 Interupts: The pins D5, D6, D7 work without restrictions; D3 and D4 work, but can not be low on boot, otherwise the WEMOS freezes
@@ -34,5 +34,12 @@ power: normal 70mA sleep 0,15ma
 
 
 ## pcb
-gnd and vcc pin header
-deep sleep stuff
+-  gnd and vcc pin header
+-  deep sleep stuff
+
+## 3d print
+-  water hight and flow
+-  case
+
+## other
+-  power consumtion messuren
