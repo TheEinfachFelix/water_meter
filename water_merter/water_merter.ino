@@ -9,29 +9,26 @@ RTC_DS3231 rtc;
 Adafruit_ADS1115 ads;
 
 // pin out
-const int input1 = 12;
-const int LSensor = 2;
-const int WSensor = 0;
-const int wSpeed = 17; //obsoleet?
-const int readLED = 15;
-const int testLED = 13;
-const int enable = 12;
+const uint8_t input1 = 12;
+const uint8_t LSensor = 2;
+const uint8_t WSensor = 0;
+const uint8_t readLED = 15;
+const uint8_t testLED = 13;
+const uint8_t enable = 12;
 
 //adc pin out
-const int PhotoR1 = 0;
-const int PhotoR2 = 1;
-const int HallSenFlow = 2;
-const int HallSenDepth = 3;
-
-//wSpeed vars
-int changevalue = 600;
-bool current = false;
-uint32_t lasthit;
+const uint8_t PhotoR1 = 0;
+const uint8_t PhotoR2 = 1;
+const uint8_t HallSenFlow = 2;
+const uint8_t HallSenDepth = 3;
 
 //eeprom vars
 uint16_t eepromAdres = 2;
-int packageSize[] = {4,2,2};
+uint8_t packageSize[] = {4,2,2,2,2,2,2};
 bool live = 0;
+
+//deepSleep
+uint32_t deepSleep = (1*60*1000000);
 
 // gets the length of an array
 #define ELEMENTCOUNT(x)  (sizeof(x) / sizeof(x[0]))
@@ -70,7 +67,6 @@ void setup() {
   ads.setGain(GAIN_TWOTHIRDS);
   ads.begin();
 
-  pinMode(wSpeed, INPUT); 
   pinMode(enable, INPUT_PULLUP); 
   pinMode(readLED, OUTPUT); 
   pinMode(testLED, OUTPUT); 
@@ -90,7 +86,7 @@ void setup() {
   }
 }
 
-////--------------------------------------------loop------------------------------------------------
+//--------------------------------------------loop------------------------------------------------
 void loop() {
   if (live == 1){
     eepromPrint();
@@ -106,17 +102,6 @@ void loop() {
 }
 
 //--------------------------------------------Sensor------------------------------------------------
-void w_speed(){
-if (analogRead(wSpeed) < changevalue && current == true){
-    Serial.println(1000/(millis() - lasthit));
-    lasthit = millis();
-    current = false;
-  }
-  if (analogRead(wSpeed) > changevalue){
-    current = true;
-  }
-}
-
 uint16_t Ltemp(){
   Lsensors.requestTemperatures();
   float LtemperatureC = Lsensors.getTempCByIndex(0);
@@ -132,7 +117,7 @@ uint16_t Wtemp(){
 }
 
 uint16_t adsRead(int p){
-  return(2*ads.readADC_SingleEnded(p));
+  return(ads.readADC_SingleEnded(p));
 }
 
 uint32_t rtcTime(){
@@ -160,6 +145,27 @@ void eepromPrint(){
     EEPROM.get(a, m3);
     Serial.print(" Ltemp: "+String(m3));
     a += packageSize[2];
+    //ads
+    //sen1
+    uint16_t m4;     
+    EEPROM.get(a, m4);
+    Serial.print(" Sen1: "+String(m4));
+    a += packageSize[3];
+    //sen2
+    uint16_t m5;     
+    EEPROM.get(a, m5);
+    Serial.print(" Sen2: "+String(m5));
+    a += packageSize[4];
+    //sen3
+    uint16_t m5;     
+    EEPROM.get(a, m5);
+    Serial.print(" Sen3: "+String(m5));
+    a += packageSize[5];
+    //sen4 
+        uint16_t m6;     
+    EEPROM.get(a, m6);
+    Serial.print(" Sen1: "+String(m6));
+    a += packageSize[6];
 
     
     Serial.println(" a:"+String(a)); 
@@ -186,6 +192,16 @@ void eepromWrite(){
   //ltemp
   EEPROM.put(eepromAdres,Ltemp());
   eepromAdres += packageSize[2];
+  //adc
+  EEPROM.put(eepromAdres,adsRead(PhotoR1));
+  eepromAdres += packageSize[3];
+  EEPROM.put(eepromAdres,adsRead(PhotoR2));
+  eepromAdres += packageSize[4];
+  EEPROM.put(eepromAdres,adsRead(HallSenFlow));
+  eepromAdres += packageSize[5];
+  EEPROM.put(eepromAdres,adsRead(HallSenDepth));
+  eepromAdres += packageSize[6];
+
 
   EEPROM.put(0,eepromAdres);
 }
@@ -218,5 +234,5 @@ void SerialResponse(){
 void sleep(){
   Serial.println("deep sleep");
   digitalWrite(readLED, 0);
-  ESP.deepSleep(1*60*1000000);
+  ESP.deepSleep(sleepTime);
 }
