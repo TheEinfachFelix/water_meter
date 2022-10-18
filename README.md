@@ -25,10 +25,6 @@ This Project was made for an school projekt to survey rivers. This projekt is on
 ## Usage
 ### Libs
 -  RTC DS3231: https://github.com/adafruit/RTClib
--  https://github.com/davetcc/IoAbstraction
--  https://github.com/davetcc/SimpleCollections
--  https://github.com/davetcc/TaskManagerIO
--  https://github.com/adafruit/Adafruit_BusIO
 
 ### Pin out
 
