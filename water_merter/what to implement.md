@@ -31,6 +31,7 @@ eepron: 4 mb size 100.000 writes
         EEPROM.write(adresse,wert)  // Schreiben der Variable wert in die Adresse adresse
 
 power: normal 70mA sleep 0,15ma
+messured: 33mA normal and 2mA sleep
 
 
 ## pcb
