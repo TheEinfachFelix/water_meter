@@ -24,8 +24,16 @@ const uint8_t HallSenDepth = 3;
 
 //------------eeprom vars------------
 uint16_t eepromAdres = 2;
-uint8_t packageSize[] = {4,2,2,2,2,2,2}; //16 byte in total
 bool live = 0;
+String packageGet[] = {}
+String packagePrint[] = {}
+uint8_t packageSize[] = {4,2,2,2,2,2,2}; //16 byte in total 
+//storage for 4.194.304/16= 262.144 data points 
+//but the eeprom can only be writen to ca 100.000 times
+//at an interval of 30 minuts you can write data for 
+//2.083 days till the eeprom dies or 
+//5.461 days thil the eeprom is full
+// so you can write ca 32 byte per intervall and have no problem with eeprom size
 
 //------------deepSleep------------
 uint32_t sleepTime = (1*60*1000000);
@@ -63,10 +71,12 @@ void setup() {
   //------------temp sensor------------
   Lsensors.begin();
   Wsensors.begin();
+
   //------------adc stuff------------
   ads.setGain(GAIN_TWOTHIRDS);
   ads.begin();
 
+  //------------pin things------------
   pinMode(enable, INPUT_PULLUP); 
   pinMode(readLED, OUTPUT); 
   pinMode(testLED, OUTPUT); 
