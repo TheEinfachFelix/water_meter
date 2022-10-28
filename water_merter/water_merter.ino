@@ -6,7 +6,7 @@
 #include <Adafruit_ADS1X15.h>
  
 RTC_DS3231 rtc;
-//Adafruit_ADS1115 ads;
+Adafruit_ADS1115 ads;
 
 //------------pin out------------
 const uint8_t input1 = 12;
@@ -25,8 +25,8 @@ const uint8_t HallSenDepth = 3;
 //------------eeprom vars------------
 uint16_t eepromAdres = 2;
 bool live = 0;
-String packageGet[] = {}
-String packagePrint[] = {}
+String packageGet[] = {};
+String packagePrint[] = {};
 uint8_t packageSize[] = {4,2,2,2,2,2,2}; //16 byte in total 
 //storage for 4.194.304/16= 262.144 data points 
 //but the eeprom can only be writen to ca 100.000 times
