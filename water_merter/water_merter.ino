@@ -234,7 +234,7 @@ void SerialResponse(){
   else if (input == "live"){
     if (live){
       live = 0;
-      Serial.println("Live on");  
+      Serial.println("Live off");  
     } else {
       live = 1;
       Serial.println("Going Live");
