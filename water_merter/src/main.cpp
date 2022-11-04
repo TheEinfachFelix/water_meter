@@ -96,6 +96,11 @@ void loop()
   }
 }
 
+uint16_t adsRead(int p)
+{
+  return (ads.readADC_SingleEnded(p));
+}
+
 //--------------------------------------------eeprom------------------------------------------------
 void eepromPrint()
 {
