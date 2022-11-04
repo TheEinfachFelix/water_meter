@@ -138,6 +138,51 @@ uint32_t rtcTime(){
 //--------------------------------------------eeprom------------------------------------------------
 void eepromPrint(){
   uint16_t a = 2;
+  while(a<eepromAdres){
+    //time
+    uint32_t m1;     
+    EEPROM.get(a, m1);
+    Serial.print(String(m1));
+    a += packageSize[0];
+    //wtemp
+    uint16_t m2;     
+    EEPROM.get(a, m2);
+    Serial.print(","+String(m2));
+    a += packageSize[1];
+    //ltemp
+    uint16_t m3;     
+    EEPROM.get(a, m3);
+    Serial.print(","+String(m3));
+    a += packageSize[2];
+    //ads
+    //PhotoR1
+    uint16_t m4;     
+    EEPROM.get(a, m4);
+    Serial.print(","+String(m4));
+    a += packageSize[3];
+    //PhotoR2
+    uint16_t m5;     
+    EEPROM.get(a, m5);
+    Serial.print(","+String(m5));
+    a += packageSize[4];
+    //HallSenFlow
+    uint16_t m6;     
+    EEPROM.get(a, m6);
+    Serial.print(","+String(m6));
+    a += packageSize[5];
+    //HallSenDepth 
+    uint16_t m7;     
+    EEPROM.get(a, m7);
+    Serial.print(","+String(m7));
+    a += packageSize[6];
+
+    
+    Serial.println(" a:"+String(a)); 
+  }
+}
+
+void DebugEepromPrint(){
+  uint16_t a = 2;
   Serial.println("current adres:" + String(eepromAdres));
   while(a<eepromAdres){
     //time
