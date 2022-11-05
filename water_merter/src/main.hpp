@@ -18,7 +18,7 @@ extern DallasTemperature Lsensors;
 extern DallasTemperature Wsensors;
 
 void export_data();
-
+void print_payload(const Payload &p);
 void collect_data();
 
 void eepromClear();

@@ -20,6 +20,7 @@ void collect_data()
   payload.photo_r2 = adsRead(PhotoR2);
   payload.hal_flow = adsRead(HallSenFlow);
   payload.hal_depth = adsRead(HallSenDepth);
-
+  Serial.println("Saving payload...");
+  print_payload(payload);
   save_payload(next_slot, payload);
 }

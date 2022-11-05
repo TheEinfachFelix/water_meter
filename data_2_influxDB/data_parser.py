@@ -1,27 +1,30 @@
+from influxdb import InfluxDBClient
+from datetime import datetime 
 row = []
-contentSave = ["","","","","","",""]
-content = contentSave
-printMsg = ["Time: ", " Wtemp: ", " Ltemp: ", " PhotoR1: ", " PhotoR2: ", " HallSenFlow: ", " HallSenDepth: "]
 
+client = InfluxDBClient(host='192.168.178.83', port=8086)
+client.switch_database("water_meter")
 
+def parse_row(row: str):
+    items = row.split(",")
+    # line protocol: time,wtemp,ltemp,photo_r1,photo_r2,hal_flow,hal_depth
+    time = items[0]
+    point = {
+        "measurement": "water_meter",
+        "time": datetime.fromtimestamp(int(time)),
+        "fields": {
+            "wtemp": float(items[1]) / 1000,
+            "ltemp": float(items[2]) / 1000,
+            "photo_r1": int(items[3]),
+            "photo_r2": int(items[4]),
+            "hal_flow": int(items[5]),
+            "hal_depth": int(items[6]),
+        }
+    }
+    print(point)
+    client.write_points(points=[point])    
 
 with open("input.txt") as file:
-    read = file.readlines()
-    for index,wert in enumerate(read):
-        row.append(wert)
-
-row.pop(0) #delets first element form row
-
-for x,wert in enumerate(row):
-    for index,wert in enumerate(printMsg):
-        row[x] = row[x].replace(printMsg[index], "")
-        while not row[x].startswith(" "):
-            content[index] += row[x][0] 
-            row[x] = row[x][1:]
-    row[x] = content
-    content = ["","","","","","",""]
-    #content = contentSave
-
-
-print(row)
-
+    lines = file.readlines()
+    for line in lines:
+        parse_row(line)
