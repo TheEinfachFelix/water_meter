@@ -17,7 +17,7 @@ uint8_t packageSize[] = {4, 2, 2, 2, 2, 2, 2}; // 16 byte in total
 //  so you can write ca 32 byte per intervall and have no problem with eeprom size
 
 //------------deepSleep------------
-uint32_t sleepTime = (1 * 60 * 1000000);
+uint32_t sleepTime = (10 * 60 * 1000000);
 
 //------------gets the length of an array------------
 #define ELEMENTCOUNT(x) (sizeof(x) / sizeof(x[0]))
