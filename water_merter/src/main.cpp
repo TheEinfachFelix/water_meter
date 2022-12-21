@@ -188,7 +188,7 @@ void SerialResponse()
   }
   else
   {
-    Serial.println("syntax error");
+    Serial.println("syntax error" + input);
   }
   Serial.flush();
 }
