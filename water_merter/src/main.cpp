@@ -155,21 +155,20 @@ void SerialResponse()
   input = Serial.readString();
   if (input == NULL)
     return;
-
-  else if (input == "print")
+  else if (input == "print" || input == "print\n")
   {
     eepromPrint();
   }
-  else if (input == "save")
+  else if (input == "save" || input == "save\n")
   {
     export_data();
   }
-  else if (input == "clear")
+  else if (input == "clear" || input == "clear\n")
   {
     eepromClear();
     Serial.println("cleared!");
   }
-  else if (input == "live")
+  else if (input == "live" || input == "live\n")
   {
     if (live)
     {
@@ -182,7 +181,7 @@ void SerialResponse()
       Serial.println("Going Live");
     }
   }
-  else if (input == "q")
+  else if (input == "q" || input == "q\n")
   {
     Serial.println("quit");
   }
